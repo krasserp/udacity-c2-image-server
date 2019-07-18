@@ -2,11 +2,7 @@ import { Router, Request, Response } from 'express';
 const HttpStatus = require('http-status-codes');
 const isImageUrl = require('is-image-url');
 
-import {
-  filterImageFromURL,
-  deleteLocalFiles,
-  filterImageWithPython
-} from '../../../../util/util';
+import { deleteLocalFiles, filterImageWithPython } from '../../../../util/util';
 
 const router: Router = Router();
 
@@ -24,21 +20,21 @@ router.get('/', async (req: Request, res: Response) => {
       .send({ err: 'image_url is not pointing to a image file' });
     return;
   }
-
-  const filteredImage: string = await filterImageWithPython(image_url);
-
-  res.status(HttpStatus.OK).sendFile(filteredImage, err => {
-    if (err) {
-      console.log(err);
-    } else {
-      deleteLocalFiles([filteredImage]);
-    }
-  });
-});
-
-router.get('/:id', async (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.send(req.params);
+  try {
+    // array of strings 1st is the modified img 2nd the downloaded img path
+    const imgPaths: string[] = await filterImageWithPython(image_url);
+    res.status(HttpStatus.OK).sendFile(imgPaths[0], err => {
+      if (err) {
+        console.log(err);
+      } else {
+        deleteLocalFiles(imgPaths);
+      }
+    });
+  } catch (err) {
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .send({ err, message: 'A issue ocurred during the image processing :(' });
+  }
 });
 
 export const FilterImage: Router = router;

@@ -1,5 +1,4 @@
 import fs from 'fs';
-import Jimp = require('jimp');
 import { spawn } from 'child_process';
 
 import util from 'util';
@@ -8,7 +7,13 @@ const streamPipeline = util.promisify(require('stream').pipeline);
 
 const fetch = require('node-fetch');
 
-async function download(inputURL: string, tempPath: string) {
+/**
+ * Allows to save a image locally from external URL
+ * returns locally saved img path
+ * @param inputURL
+ * @param tempPath
+ */
+async function downloadImageFromUrl(inputURL: string, tempPath: string) {
   const fileName = inputURL.split('/').pop();
   const tempFilePath = `${tempPath}/${fileName}`;
   const response = await fetch(inputURL);
@@ -18,34 +23,12 @@ async function download(inputURL: string, tempPath: string) {
   return tempFilePath;
 }
 
-//Node.js Function to save image from External URL.
-
-// filterImageFromURL
-// helper function to download, filter, and save the filtered image locally
-// returns the absolute path to the local image
-// INPUTS
-//    inputURL: string - a publicly accessible url to an image file
-// RETURNS
-//    an absolute path to a filtered image locally saved file
-export async function filterImageFromURL(inputURL: string): Promise<string> {
+/**
+ * returns file path to modified image
+ */
+async function pythonModifyFile(fileToModify: string): Promise<string> {
   return new Promise(async resolve => {
-    const photo = await Jimp.read(inputURL);
-    const outpath =
-      '/tmp/filtered.' + Math.floor(Math.random() * 2000) + '.jpg';
-    await photo
-      .resize(256, 256) // resize
-      .quality(60) // set JPEG quality
-      .greyscale() // set greyscale
-      .write(__dirname + outpath, img => {
-        resolve(__dirname + outpath);
-      });
-  });
-}
-
-async function pythonReturnedFilePath(inputUrl: string): Promise<string> {
-  return new Promise(async resolve => {
-    // python imgModifier.py --input /home/phil/projects/udacity/cloudDev/projects/002/cloud-developer/src/util/tmp//kitten-report.jpg
-    const args = [`--input`, `${inputUrl}`];
+    const args = [`--input`, `${fileToModify}`];
     let returnData: string;
     const pythonFilePath = `${__dirname}/../python/imgModifier.py`;
     args.unshift(pythonFilePath);
@@ -61,6 +44,7 @@ async function pythonReturnedFilePath(inputUrl: string): Promise<string> {
     });
 
     pyspawn.on('close', (code: number) => {
+      // we need to convert to string and replace an stdout line break
       returnData = returnData
         .toString()
         .split('/')
@@ -77,12 +61,21 @@ async function pythonReturnedFilePath(inputUrl: string): Promise<string> {
   });
 }
 
-export async function filterImageWithPython(inputURL: string): Promise<string> {
-  return new Promise(async resolve => {
-    const fileToModify = await download(inputURL, `${__dirname}/tmp/`);
-    console.log(fileToModify, 'temp saved here');
-    const photoPath: string = await pythonReturnedFilePath(fileToModify);
-    resolve(photoPath);
+export async function filterImageWithPython(
+  inputURL: string
+): Promise<string[]> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const fileToModify = await downloadImageFromUrl(
+        inputURL,
+        `${__dirname}/tmp/`
+      );
+      const filteredImage: string = await pythonModifyFile(fileToModify);
+      resolve([filteredImage, fileToModify]);
+    } catch (err) {
+      console.log(err);
+      reject(err);
+    }
   });
 }
 // deleteLocalFiles
