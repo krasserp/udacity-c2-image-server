@@ -45,6 +45,6 @@ threshold = float(args.threshold)
 src_gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
 
 test = CannyThreshold(threshold)
-newPath = relPath+'/../util/tmp/'+str(ts)+'.jpg'
+newPath = relPath+'/../tmp/'+str(ts)+'.jpg'
 print(newPath)
 cv.imwrite(newPath, test)

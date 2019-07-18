@@ -30,7 +30,7 @@ async function pythonModifyFile(fileToModify: string): Promise<string> {
   return new Promise(async resolve => {
     const args = [`--input`, `${fileToModify}`];
     let returnData: string;
-    const pythonFilePath = `${__dirname}/../python/imgModifier.py`;
+    const pythonFilePath = `${__dirname}/python/imgModifier.py`;
     args.unshift(pythonFilePath);
     const pyspawn = spawn('python', args);
     pyspawn.stdout.on('data', (data: string) => {
