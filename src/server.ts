@@ -1,7 +1,6 @@
 import express from 'express';
 import { IndexRouter } from './controllers/v0/index.router';
 import bodyParser from 'body-parser';
-import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
 (async () => {
   // Init the Express application
@@ -15,9 +14,7 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
   // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
   // GET /filteredimage?image_url={{URL}}
-  
   // Get a signed url to put a new item in the bucket
-  
   // endpoint to filter an image from a public url.
   // IT SHOULD
   //    1
