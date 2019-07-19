@@ -2,6 +2,16 @@
 
 ## Tasks
 
+### Prerequisites:
+In order to run this locally 2 packages will need to be installed for python.
+
+On aws eb `python 2.7` is installed.
+2 packages are needed:
+```
+sudo pip install --force-reinstall numpy==1.16.3
+sudo pip install opencv-python
+```
+
 ### Setup Node Enviornment
 
 You'll need to create a new node server. Open a new terminal within the project directory and run:
