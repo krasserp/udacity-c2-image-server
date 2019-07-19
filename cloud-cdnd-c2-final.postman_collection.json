@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4bcf1909-8996-44b7-be35-b130ab03d12f",
+		"_postman_id": "bf60fdd4-0c52-4dd5-bed1-963b9b6da462",
 		"name": "cloud-cdnd-c2-final",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -54,7 +54,7 @@
 	],
 	"variable": [
 		{
-			"id": "1df3d31a-de30-494b-a3d0-f1228dd8713c",
+			"id": "10609810-f9a6-4ddd-b0d8-85970ffd584e",
 			"key": "HOST",
 			"value": "localhost:8082",
 			"type": "string"
