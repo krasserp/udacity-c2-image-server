@@ -11,30 +11,41 @@ You'll need to create a new node server. Open a new terminal within the project 
 
 ### Create a new endpoint in the server.ts file
 
-The starter code has a task for you to complete an endpoint in `./src/server.ts` which uses query paramater to download an image from a public URL, filter the image, and return the result.
+Created new endPoint `.src/controllers/v0/filterImage/routes/filterImage.route.ts`
 
-We've included a few helper functions to handle some of these concepts and we're importing it for you at the top of the `./src/server.ts`  file.
+This enables the following endpoint when the server is started:
+`http://{{HOST}}/filteredimage?image_url={{imgURL}`
 
-```typescript
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+HOST : `localhost:8082`
+imgURL: `https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg`
+
+### Test locally
+
+1.) start the server
+`npm run dev`
+2.) open this url in a browser:
+`http://localhost:8082/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg`
+
+### Test on aws eb
+
+1.) Try this link:
+`http://udagram-krasserp-filter-001.eu-west-1.elasticbeanstalk.com/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg`
+
+### Test via postman
+
+The postman collection included has been updated to the aws eb domain in {{HOST}}.
+`./cloud-cdnd-c2-final.postman_collection.json`
+
+### Deployment
+
+Please review
+
+```
+./ebextensions
+./elasticbeanstalk
+./package.json -> npm run build
 ```
 
-### Deploying your system
+#### aws eb screenshot
 
-Follow the process described in the course to `eb init` a new application and `eb create` a new enviornment to deploy your image-filter service! Don't forget you can use `eb deploy` to push changes.
-
-## Stand Out (Optional)
-
-### Refactor the course RESTapi
-
-If you're feeling up to it, refactor the course RESTapi to make a request to your newly provisioned image server.
-
-### Authentication
-
-Prevent requests without valid authentication headers.
-> !!NOTE if you choose to submit this, make sure to add the token to the postman collection and export the postman collection file to your submission so we can review!
-
-### Custom Domain Name
-
-Add your own domain name and have it point to the running services (try adding a subdomain name to point to the processing server)
-> !NOTE: Domain names are not included in AWS’ free tier and will incur a cost.
+![AWS](deployment_screenshots/Screenshot14-33-59.png)

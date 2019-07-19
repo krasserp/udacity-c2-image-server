@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8082/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg",
+			"name": "http://{{HOST}}/filteredimage?image_url=https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -54,9 +54,9 @@
 	],
 	"variable": [
 		{
-			"id": "10609810-f9a6-4ddd-b0d8-85970ffd584e",
+			"id": "57ceef66-3f91-415c-8e73-44436ebbe467",
 			"key": "HOST",
-			"value": "localhost:8082",
+			"value": "udagram-krasserp-filter-001.eu-west-1.elasticbeanstalk.com",
 			"type": "string"
 		}
 	]
