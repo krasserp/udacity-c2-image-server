@@ -1,6 +1,6 @@
 branch-defaults:
   dev:
-    environment: udagram-krasserp-image-filter-dev
+    environment: udagram-krasserp-image-filter-dev-dev
     group_suffix: null
 deploy:
   artifact: ./www/Archive.zip
@@ -18,10 +18,3 @@ global:
   repository: null
   sc: git
   workspace_type: Application
-commands:
-  command1:
-    command: pip install --upgrade pip
-  command2:
-    command: pip install --force-reinstall numpy==1.16.3
-  command3:
-    command: pip install --force-reinstall opencv-contrib-python
