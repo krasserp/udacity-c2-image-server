@@ -22,6 +22,7 @@ coverage/
 www/
 node_modules/
 tmp/
+!src/util/tmp
 temp/
 platforms/
 plugins/
