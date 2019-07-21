@@ -3,14 +3,22 @@
 ## Tasks
 
 ### Prerequisites:
-In order to run this locally 2 packages will need to be installed for python.
+To emulate the aws eb service also locally we use `python 2.7` 
 
-On aws eb `python 2.7` is installed.
-2 packages are needed:
+To do so we are using [pipenv](https://github.com/pypa/pipenv). If you haven't installed this please do so. 
+
+To set this up please run 
 ```
-sudo pip install --force-reinstall numpy==1.16.3
-sudo pip install opencv-python
+$ pipenv install
 ```
+then
+
+```
+$ pipenv shell
+$ python --version
+```
+You should see something like `Python 2.7.12` 
+
 
 ### Setup Node Enviornment
 
